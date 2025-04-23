@@ -1,0 +1,41 @@
+version: '3.8'
+
+services:
+  postgres:
+    build: ./PostgreSQL
+    container_name: meu-postgres
+    environment:
+      POSTGRES_USER: meu_usuario
+      POSTGRES_PASSWORD: minha_senha
+      POSTGRES_DB: meu_banco
+    ports:
+      - "5432:5432"
+    volumes:
+      - pgdata:/var/lib/postgresql/data
+
+  mongodb:
+    build: ./MongoDB
+    container_name: meu-mongodb
+    environment:
+      MONGO_INITDB_ROOT_USERNAME: meu_usuario
+      MONGO_INITDB_ROOT_PASSWORD: minha_senha
+    ports:
+      - "27017:27017"
+    volumes:
+      - mongo_data:/data/db
+
+  nodejs:
+    build: ./Nodejs
+    container_name: meu-nodejs
+    ports:
+      - "3000:3000"
+    depends_on:
+      - postgres
+      - mongodb
+    volumes:
+      - ./nodejs:/usr/src/app
+    command: npm start
+
+volumes:
+  pgdata:
+  mongo_data:

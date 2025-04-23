@@ -1,0 +1,10 @@
+FROM postgres:17.4
+
+ENV POSTGRES_USER=usuario
+ENV POSTGRES_PASSWORD=senha
+ENV POSTGRES_DB=nome_do_banco
+
+EXPOSE 5432
+
+
+
